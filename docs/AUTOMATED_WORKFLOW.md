@@ -56,6 +56,7 @@ After human merge, a separate trusted `pull_request_target` workflow extracts th
 ## Failure behavior
 
 - GitHub or model failure: report `BLOCKED`; do not invent a successful handoff.
+- Incomplete non-interactive model pass: continue the same OpenCode session up to `OPENCODE_MAX_PASSES` (default three), then block if no mandatory final report exists.
 - Dirty or stale worktree: runner stops before claiming an issue.
 - Critical/high security finding: fail the security status and return work to R510.
 - Missing references or ambiguous scope: ask T310; do not guess issue relationships.

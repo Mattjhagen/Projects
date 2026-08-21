@@ -73,16 +73,40 @@ prompt="You are [$AGENT_ID], the $AGENT_ROLE agent. Read AGENTS.md, agents/$role
 cd "$PROJECT_DIR"
 report_dir="$PROJECT_DIR/.agent-state/$AGENT_ID"
 mkdir -p "$report_dir/runs"
-run_id="$(date -u '+%Y%m%dT%H%M%SZ')"
+run_id="$(date -u '+%Y%m%dT%H%M%SZ')-$$"
 run_log="$report_dir/runs/$run_id.log"
+touch "$run_log"
+chmod 600 "$run_log"
 printf '%s\n' "OpenCode automation started. Output: $run_log" |
   "$report_script" STATUS running "Working on issue #$issue" "$issue" "$issue_url"
 
-set +e
-opencode run "$prompt" 2>&1 | tee "$run_log"
-opencode_status="${PIPESTATUS[0]}"
-set -e
-chmod 600 "$run_log"
+max_passes="${OPENCODE_MAX_PASSES:-3}"
+case "$max_passes" in
+  1|2|3|4|5) ;;
+  *) echo "OPENCODE_MAX_PASSES must be between 1 and 5" >&2; exit 1 ;;
+esac
+
+opencode_status=0
+report_complete=false
+for ((attempt = 1; attempt <= max_passes; attempt++)); do
+  set +e
+  if [[ "$attempt" -eq 1 ]]; then
+    opencode run "$prompt" 2>&1 | tee -a "$run_log"
+  else
+    continuation="Continue the same issue and do not repeat completed discovery. Finish the required GitHub handoff and publish the mandatory final report with scripts/agent-report.sh before stopping. This is continuation $attempt of $max_passes."
+    opencode run --continue "$continuation" 2>&1 | tee -a "$run_log"
+  fi
+  opencode_status="${PIPESTATUS[0]}"
+  set -e
+
+  if [[ "$opencode_status" -ne 0 ]]; then
+    break
+  fi
+  if ! grep -Fq 'State: running' "$report_dir/latest.md"; then
+    report_complete=true
+    break
+  fi
+done
 
 if [[ "$opencode_status" -ne 0 ]]; then
   printf '%s\n' "OpenCode exited with status $opencode_status. Inspect $run_log." |
@@ -99,16 +123,16 @@ Impact: No successful downstream handoff was recorded."
   exit "$opencode_status"
 fi
 
-if grep -Fq 'State: running' "$report_dir/latest.md"; then
-  printf '%s\n' "OpenCode exited successfully but did not publish a structured final report. Inspect $run_log and GitHub." |
+if [[ "$report_complete" != "true" ]]; then
+  printf '%s\n' "OpenCode exhausted $max_passes passes without publishing a structured final report. Inspect $run_log and GitHub." |
     "$report_script" STATUS needs-review "OpenCode run ended without a final agent report" "$issue" "$issue_url"
   gh issue edit "$issue" --repo "$REPOSITORY" \
     --remove-label status:in-progress --add-label status:blocked
   gh issue comment "$issue" --repo "$REPOSITORY" --body "[$AGENT_ID] BLOCKED
 
 Issue: #$issue
-Blocker: The automated run exited without publishing its mandatory final report.
-Attempted: Output was preserved in the host-local run log.
+Blocker: The automated run exhausted $max_passes bounded passes without publishing its mandatory final report.
+Attempted: The initial session and its continuations were preserved in the host-local run log.
 Decision needed: Inspect the report and log before returning the issue to status:ready.
 Impact: The next handoff cannot be trusted or inferred."
 fi
