@@ -1,0 +1,61 @@
+name: Agent task
+description: Create a bounded task for one repository agent
+title: "[Task]: "
+labels: ["status:draft"]
+body:
+  - type: textarea
+    id: objective
+    attributes:
+      label: Objective
+      description: State one observable outcome.
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: Explain why the work matters and link relevant material.
+    validations:
+      required: true
+  - type: textarea
+    id: in_scope
+    attributes:
+      label: In scope
+      placeholder: "- Required change"
+    validations:
+      required: true
+  - type: textarea
+    id: out_scope
+    attributes:
+      label: Out of scope
+      placeholder: "- Explicitly excluded work"
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      placeholder: "- [ ] Verifiable result"
+    validations:
+      required: true
+  - type: input
+    id: target
+    attributes:
+      label: Target repository
+      placeholder: Mattjhagen/Projects
+    validations:
+      required: true
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies and blockers
+      description: Link prerequisite issues or write "None".
+    validations:
+      required: true
+  - type: textarea
+    id: security
+    attributes:
+      label: Security considerations
+      description: Note data, authentication, infrastructure, or abuse implications.
+    validations:
+      required: true

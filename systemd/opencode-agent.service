@@ -1,0 +1,21 @@
+[Unit]
+Description=Run one Projects OpenCode agent task
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=matt
+WorkingDirectory=/home/matt/Projects
+EnvironmentFile=/home/matt/.config/projects-agent.env
+ExecStart=/home/matt/Projects/scripts/agent-once.sh
+Nice=10
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ProtectHome=read-only
+ReadWritePaths=/home/matt/Projects /home/matt/.local /home/matt/.cache /home/matt/.config/opencode
+TimeoutStartSec=45min
+
+[Install]
+WantedBy=multi-user.target
