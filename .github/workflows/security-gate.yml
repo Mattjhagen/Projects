@@ -1,0 +1,26 @@
+name: Security gate
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: read
+  statuses: write
+
+jobs:
+  mark-pending:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require R410 review for current commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          REPOSITORY: ${{ github.repository }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+        run: |
+          gh api --method POST "repos/$REPOSITORY/statuses/$HEAD_SHA" \
+            -f state=pending \
+            -f context='agent/security-review' \
+            -f description='Awaiting R410 security and bug review' \
+            -f target_url="$PR_URL"

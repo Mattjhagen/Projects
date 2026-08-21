@@ -20,6 +20,14 @@ Network addresses and credentials are deliberately excluded from this public rep
 6. The Project Manager checks the acceptance criteria and changes the issue to `status:done` after merge.
 7. A human approves every merge during the MVP.
 
+Submit a new objective to the Project Manager from T310 with:
+
+```bash
+scripts/submit-task.sh "Build the requested capability" "Describe the desired outcome and constraints."
+```
+
+When periodic automation is enabled, T310 scopes the intake, R510 implements the resulting development task, R410 performs security and bug review, and T310 verifies completion. See [Automated workflow](docs/AUTOMATED_WORKFLOW.md).
+
 GitHub is the source of truth. Local chat history, terminal output, and unpushed branches are not durable project state.
 
 ## Start here
@@ -52,4 +60,4 @@ The report mirrors the agent's latest structured GitHub status and can be read o
 
 ## MVP safety boundary
 
-Automation may select and analyze tasks, create branches, commit, push, and open pull requests. It may not merge, deploy, rotate credentials, modify branch protection, delete resources, or run destructive security tests without explicit human approval.
+Automation may select and analyze tasks, create branches, commit, push, open pull requests, and record security verdicts. It may not merge, deploy, rotate credentials, modify branch protection, delete resources, or run destructive security tests without explicit human approval.

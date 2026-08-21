@@ -19,6 +19,26 @@ case "$AGENT_ROLE:$AGENT_ID" in
   *) echo "Invalid AGENT_ROLE and AGENT_ID pair" >&2; exit 1 ;;
 esac
 
+current_branch="$(git -C "$PROJECT_DIR" branch --show-current)"
+if [[ "$current_branch" != "main" || -n "$(git -C "$PROJECT_DIR" status --porcelain)" ]]; then
+  printf '%s\n' "Expected a clean main branch; found branch '$current_branch' or local changes. Manual recovery is required before claiming more work." |
+    "$report_script" BLOCKED dirty-worktree "Agent worktree is not ready for automation"
+  echo "Automation requires a clean main branch" >&2
+  exit 1
+fi
+
+git -C "$PROJECT_DIR" fetch origin main --quiet
+if [[ "$(git -C "$PROJECT_DIR" rev-parse main)" != "$(git -C "$PROJECT_DIR" rev-parse origin/main)" ]]; then
+  if git -C "$PROJECT_DIR" merge-base --is-ancestor main origin/main; then
+    git -C "$PROJECT_DIR" merge --ff-only origin/main --quiet
+  else
+    printf '%s\n' 'Local main has diverged from origin/main. Manual recovery is required.' |
+      "$report_script" BLOCKED stale-main "Agent main branch has diverged"
+    echo "Local main has diverged from origin/main" >&2
+    exit 1
+  fi
+fi
+
 issue="$(gh issue list --repo "$REPOSITORY" --state open \
   --label "agent:$AGENT_ROLE" --label "status:ready" \
   --limit 1 --json number --jq '.[0].number // empty')"
@@ -48,7 +68,7 @@ case "$AGENT_ROLE" in
   security) role_file="cybersecurity-expert" ;;
 esac
 
-prompt="You are [$AGENT_ID], the $AGENT_ROLE agent. Read AGENTS.md and agents/$role_file.md. Work only on $issue_url. Follow the repository message protocol. Before your final response, write a complete host-local status using scripts/agent-report.sh. Do not merge or deploy."
+prompt="You are [$AGENT_ID], the $AGENT_ROLE agent. Read AGENTS.md, agents/$role_file.md, and docs/AUTOMATED_WORKFLOW.md. Work only on $issue_url and its explicitly linked children or pull request. Perform the required cross-agent handoff. Follow the repository message protocol. Before your final response, write a complete host-local status using scripts/agent-report.sh. Do not merge or deploy."
 
 cd "$PROJECT_DIR"
 report_dir="$PROJECT_DIR/.agent-state/$AGENT_ID"
