@@ -1,0 +1,21 @@
+name: Coordination validation
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install ShellCheck
+        run: sudo apt-get update && sudo apt-get install -y shellcheck
+      - name: Validate shell scripts
+        run: shellcheck scripts/*.sh
+      - name: Validate required files and configuration
+        run: scripts/validate-coordination.sh

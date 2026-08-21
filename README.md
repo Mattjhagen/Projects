@@ -1,18 +1,45 @@
-// Agents Notes Below
+# Projects Agent Workspace
 
-URL's
+This repository coordinates three independent OpenCode agents that collaborate through GitHub Issues and pull requests.
 
-// vibeCodesSpace
-https://github.com/Mattjhagen/vibeCodesSpace (https://vibecodes.space/)
+| Logical host | Role | Responsibility |
+| --- | --- | --- |
+| `agent-pm` | Project Manager | Plans work, assigns issues, resolves blockers, and verifies acceptance criteria |
+| `agent-dev` | Senior Developer | Implements scoped changes, tests them, and opens pull requests |
+| `agent-security` | Cybersecurity Expert | Reviews designs and pull requests, tracks findings, and blocks unsafe releases |
 
-// Velour E-Commerce
-https://github.com/Mattjhagen/Morrow (https://velour.live/)
+Network addresses and credentials are deliberately excluded from this public repository. Configure logical host aliases locally.
 
-// PurePulse Admin, Client Portal, Affiliate Portal
-https://github.com/Mattjhagen/purepulse-admin (https://login.purepulse.one/)
+## How work moves
 
-// PurePulseOne Landing Home Page
-https://github.com/Mattjhagen/PurePulse (http://purepulse.one/)
+1. A human or the Project Manager creates an issue from the **Agent task** template.
+2. The Project Manager applies exactly one `agent:*` label and `status:ready`.
+3. The assigned agent claims the issue and changes the state to `status:in-progress`.
+4. Code changes are made on an `agent/<role>/<issue>-<slug>` branch and submitted as a pull request.
+5. CI runs. The security agent reviews code-bearing pull requests.
+6. The Project Manager checks the acceptance criteria and changes the issue to `status:done` after merge.
+7. A human approves every merge during the MVP.
 
-// PurePulse Marketing Materials
-https://github.com/Mattjhagen/PurePulseMarketing (https://mattjhagen.github.io/PurePulseMarketing/)
+GitHub is the source of truth. Local chat history, terminal output, and unpushed branches are not durable project state.
+
+## Start here
+
+- [Shared agent rules](AGENTS.md)
+- [Architecture](docs/ARCHITECTURE.md)
+- [Message protocol](docs/MESSAGE_PROTOCOL.md)
+- [Security policy](docs/SECURITY_POLICY.md)
+- [Installation and operations](docs/RUNBOOK.md)
+
+## Managed projects
+
+| Project | Repository | Site |
+| --- | --- | --- |
+| vibeCodesSpace | [Mattjhagen/vibeCodesSpace](https://github.com/Mattjhagen/vibeCodesSpace) | [vibecodes.space](https://vibecodes.space/) |
+| Velour E-Commerce | [Mattjhagen/Morrow](https://github.com/Mattjhagen/Morrow) | [velour.live](https://velour.live/) |
+| PurePulse portals | [Mattjhagen/purepulse-admin](https://github.com/Mattjhagen/purepulse-admin) | [login.purepulse.one](https://login.purepulse.one/) |
+| PurePulse landing page | [Mattjhagen/PurePulse](https://github.com/Mattjhagen/PurePulse) | [purepulse.one](http://purepulse.one/) |
+| PurePulse marketing | [Mattjhagen/PurePulseMarketing](https://github.com/Mattjhagen/PurePulseMarketing) | [marketing site](https://mattjhagen.github.io/PurePulseMarketing/) |
+
+## MVP safety boundary
+
+Automation may select and analyze tasks, create branches, commit, push, and open pull requests. It may not merge, deploy, rotate credentials, modify branch protection, delete resources, or run destructive security tests without explicit human approval.
