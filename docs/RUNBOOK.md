@@ -4,6 +4,8 @@
 
 Each host must have `git`, `gh`, and `opencode`, an authenticated GitHub account, and a clean checkout at `/home/matt/Projects`.
 
+The R410 GitHub credential must have read/write **Commit statuses** permission in addition to repository contents, issues, and pull requests so it can publish the `agent/security-review` verdict. The T310 and R510 credentials must not have Commit statuses write permission.
+
 ## 1. Install repository labels
 
 Run once from an authenticated host:
@@ -67,6 +69,8 @@ scripts/start-agent.sh
 
 Only after the manual cycle succeeds, change `AUTOMATION_ENABLED=true`. The one-shot runner invokes OpenCode non-interactively with the selected issue. It does not merge or deploy.
 
+Before enabling timers, protect `main` and require both `validate` and `agent/security-review`. Repository administration remains a human operation.
+
 Install the service templates:
 
 ```bash
@@ -75,6 +79,18 @@ sudo cp systemd/opencode-agent.timer /etc/systemd/system/
 sudo systemctl daemon-reload
 sudo systemctl enable --now opencode-agent.timer
 systemctl list-timers opencode-agent.timer
+```
+
+Submit work from T310:
+
+```bash
+scripts/submit-task.sh "Task title" "Desired outcome, constraints, and relevant context."
+```
+
+Follow progress without screenshots:
+
+```bash
+scripts/show-agent-report.sh
 ```
 
 ## Routine checks

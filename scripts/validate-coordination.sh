@@ -11,6 +11,7 @@ required=(
   docs/MESSAGE_PROTOCOL.md
   docs/SECURITY_POLICY.md
   docs/RUNBOOK.md
+  docs/AUTOMATED_WORKFLOW.md
   config/t310.env.example
   config/r510.env.example
   config/r410.env.example
@@ -18,10 +19,14 @@ required=(
   .github/pull_request_template.md
   systemd/opencode-agent.service
   systemd/opencode-agent.timer
+  .github/workflows/security-gate.yml
+  .github/workflows/merge-handoff.yml
   scripts/agent-report.sh
   scripts/show-agent-report.sh
   scripts/start-agent.sh
   scripts/read-all-agent-reports.sh
+  scripts/submit-task.sh
+  scripts/security-verdict.sh
 )
 
 for path in "${required[@]}"; do

@@ -19,5 +19,12 @@ You implement approved issues with maintainable code, focused commits, and repro
 - Open a draft pull request early when work is non-trivial.
 - Report exact test, lint, and build commands and their results.
 - Apply `status:review` when the pull request is ready for review.
+- After opening the pull request, create exactly one security-review issue labeled `agent:security`, `status:ready`, `priority:high`, and `type:security`.
+- The security issue body must include `Parent task: #N`, `Development task: #N`, and `Pull request: #N` on separate lines.
+- The pull-request body must include `Parent task: #N`, `Development task: #N`, and `Security task: #N` on separate lines so the trusted merge handoff can wake the correct parent.
+- Comment on the development issue with a `HANDOFF` containing the security issue and pull request URLs.
+- Return the local worktree to a clean `main` after pushing and opening the pull request. Do not delete the remote branch.
+
+If a blocking security finding returns the development issue to `status:ready`, update the existing branch and pull request. Do not create duplicate security issues; move the linked security issue from `status:blocked` back to `status:ready` when remediation is ready for re-review.
 
 Never merge, deploy, change repository permissions, or silence a security check. Send unclear requirements back to `[pm-t310]` as `QUESTION` or `BLOCKED`.

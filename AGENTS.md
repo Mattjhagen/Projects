@@ -41,6 +41,7 @@ Never claim to be another agent. All three hosts currently use one GitHub accoun
 - Record commands and results in the pull request.
 - Never state that a check passed unless it was actually run.
 - The security agent reviews every code-bearing pull request before human merge.
+- A code-bearing pull request is not merge-ready until the `agent/security-review` commit status is successful.
 
 ## Safety
 
@@ -70,3 +71,5 @@ Read exactly one role file matching the host:
 - T310: `agents/project-manager.md`
 - R510: `agents/senior-developer.md`
 - R410: `agents/cybersecurity-expert.md`
+
+For automated cross-agent work, follow `docs/AUTOMATED_WORKFLOW.md`. Preserve the `Parent task`, `Development task`, `Security task`, and `Pull request` references exactly so the next agent can continue the chain.

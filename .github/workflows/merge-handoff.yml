@@ -1,0 +1,63 @@
+name: Merge handoff
+
+on:
+  pull_request_target:
+    types: [closed]
+
+permissions:
+  contents: read
+  issues: write
+  statuses: read
+
+jobs:
+  wake-project-manager:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Return parent task to Project Manager
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_BODY: ${{ github.event.pull_request.body }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          parent="$(printf '%s\n' "$PR_BODY" | sed -nE 's/^Parent task: #([0-9]+)$/\1/p' | head -1)"
+          if [[ -z "$parent" ]]; then
+            echo "No exact Parent task reference; no PM issue was changed."
+            exit 0
+          fi
+
+          current_labels="$(gh issue view "$parent" --repo "$REPOSITORY" --json labels --jq '.labels[].name')"
+          security_state="$(gh api "repos/$REPOSITORY/commits/$HEAD_SHA/status" \
+            --jq '[.statuses[] | select(.context == "agent/security-review")][0].state // "missing"')"
+
+          if [[ "$security_state" != "success" ]]; then
+            for label in status:review status:in-progress status:ready; do
+              if grep -Fxq "$label" <<<"$current_labels"; then
+                gh issue edit "$parent" --repo "$REPOSITORY" --remove-label "$label"
+              fi
+            done
+            gh issue edit "$parent" --repo "$REPOSITORY" --add-label status:blocked
+            gh issue comment "$parent" --repo "$REPOSITORY" --body "[system] BLOCKED
+
+Pull request: #$PR_NUMBER
+Blocker: The merged head did not have a successful agent/security-review status.
+Evidence: $PR_URL
+Decision needed: Perform post-merge security validation and record the process failure."
+            exit 0
+          fi
+
+          for label in status:blocked status:review status:in-progress; do
+            if grep -Fxq "$label" <<<"$current_labels"; then
+              gh issue edit "$parent" --repo "$REPOSITORY" --remove-label "$label"
+            fi
+          done
+          gh issue edit "$parent" --repo "$REPOSITORY" --add-label status:ready
+          gh issue comment "$parent" --repo "$REPOSITORY" --body "[system] HANDOFF
+
+Pull request: #$PR_NUMBER
+State: ready
+Summary: Human merge completed. Project Manager completion verification is ready.
+Evidence: $PR_URL"

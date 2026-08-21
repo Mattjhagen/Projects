@@ -43,3 +43,5 @@ An actionable issue has exactly one `agent:*` label and one `status:*` label. Th
 This design is auditable and requires no new central service. GitHub availability becomes a dependency, label updates are not a transactional queue, and attribution prefixes are required while credentials are shared. Separate fine-grained credentials or a GitHub App should replace the shared account before expanding autonomy.
 
 Host-local reports improve live visibility and continue working during GitHub outages. They are not replicated, are not authoritative, and may be lost with the host; decisions and handoffs must still be posted to GitHub when service is available.
+
+The automated lifecycle is a parent/child issue state machine. The human intake remains blocked while development and security children run, moves to review after R410 passes the exact PR head, and returns to ready only after the trusted post-merge handoff. A pending `agent/security-review` commit status is placed on every pull request update; the R410 verdict helper changes that status to success or failure. Branch protection and least-privilege host credentials make that status the technical pre-merge gate.
