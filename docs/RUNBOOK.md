@@ -39,6 +39,14 @@ cd /home/matt/Projects
 scripts/agent-health-check.sh
 ```
 
+Initialize and inspect the local report:
+
+```bash
+printf '%s\n' 'Host configuration completed.' |
+  scripts/agent-report.sh STATUS ready 'Agent is configured and healthy'
+scripts/show-agent-report.sh
+```
+
 ## 3. Manual MVP
 
 Leave `AUTOMATION_ENABLED=false`. Create one documentation issue, apply `agent:developer` and `status:ready`, and run:
@@ -48,6 +56,12 @@ scripts/agent-once.sh
 ```
 
 The script prints the next issue but does not invoke OpenCode. Start OpenCode manually, complete the issue, and verify the full issue-to-PR-to-review cycle.
+
+Use `scripts/start-agent.sh` instead of launching `opencode` directly for interactive sessions. It records session start and exit in the local status channel:
+
+```bash
+scripts/start-agent.sh
+```
 
 ## 4. Enable one-shot automation
 
@@ -70,6 +84,13 @@ scripts/agent-health-check.sh
 systemctl status opencode-agent.timer
 journalctl -u opencode-agent.service -n 100 --no-pager
 gh issue list --repo Mattjhagen/Projects --label "agent:developer,status:ready"
+scripts/show-agent-report.sh
+```
+
+From a controller with `agent-pm`, `agent-dev`, and `agent-security` SSH aliases, collect all reports with:
+
+```bash
+scripts/read-all-agent-reports.sh
 ```
 
 ## Updating

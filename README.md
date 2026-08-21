@@ -30,6 +30,16 @@ GitHub is the source of truth. Local chat history, terminal output, and unpushed
 - [Security policy](docs/SECURITY_POLICY.md)
 - [Installation and operations](docs/RUNBOOK.md)
 
+## Local agent reports
+
+Each host maintains an untracked report at:
+
+```text
+/home/matt/Projects/.agent-state/<agent-id>/latest.md
+```
+
+The report mirrors the agent's latest structured GitHub status and can be read over SSH without screenshots. Session logs are stored under the same directory. GitHub remains the durable source of truth; local reports are an operational visibility channel.
+
 ## Managed projects
 
 | Project | Repository | Site |

@@ -18,6 +18,10 @@ required=(
   .github/pull_request_template.md
   systemd/opencode-agent.service
   systemd/opencode-agent.timer
+  scripts/agent-report.sh
+  scripts/show-agent-report.sh
+  scripts/start-agent.sh
+  scripts/read-all-agent-reports.sh
 )
 
 for path in "${required[@]}"; do

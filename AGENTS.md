@@ -54,6 +54,15 @@ Never claim to be another agent. All three hosts currently use one GitHub accoun
 
 Before stopping, post a structured status using `docs/MESSAGE_PROTOCOL.md`. Include the issue, branch or PR, verification evidence, remaining work, and any risk or blocker.
 
+Also write the same status to the host-local report before your final response:
+
+```bash
+printf '%s\n' 'Detailed evidence, remaining work, and blockers.' |
+  scripts/agent-report.sh STATUS current 'Short factual summary' ISSUE_NUMBER URL
+```
+
+Use the appropriate message type and state. The report is mandatory even when GitHub is unavailable; it gives the human operator and monitoring assistant a reliable SSH-readable status. Never include secrets, tokens, host addresses, or private user data. `.agent-state/` is local operational state and must never be committed.
+
 ## Role instructions
 
 Read exactly one role file matching the host:
