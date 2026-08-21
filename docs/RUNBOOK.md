@@ -4,7 +4,7 @@
 
 Each host must have `git`, `gh`, and `opencode`, an authenticated GitHub account, and a clean checkout at `/home/matt/Projects`.
 
-The R410 GitHub credential must have read/write **Commit statuses** permission in addition to repository contents, issues, and pull requests so it can publish the `agent/security-review` verdict.
+The R410 GitHub credential must have read/write **Commit statuses** permission in addition to repository contents, issues, and pull requests so it can publish the `agent/security-review` verdict. The T310 and R510 credentials must not have Commit statuses write permission.
 
 ## 1. Install repository labels
 

@@ -1,0 +1,42 @@
+name: Merge handoff
+
+on:
+  pull_request_target:
+    types: [closed]
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  wake-project-manager:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Return parent task to Project Manager
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_BODY: ${{ github.event.pull_request.body }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          parent="$(printf '%s\n' "$PR_BODY" | sed -nE 's/^Parent task: #([0-9]+)$/\1/p' | head -1)"
+          if [[ -z "$parent" ]]; then
+            echo "No exact Parent task reference; no PM issue was changed."
+            exit 0
+          fi
+
+          current_labels="$(gh issue view "$parent" --repo "$REPOSITORY" --json labels --jq '.labels[].name')"
+          for label in status:blocked status:review status:in-progress; do
+            if grep -Fxq "$label" <<<"$current_labels"; then
+              gh issue edit "$parent" --repo "$REPOSITORY" --remove-label "$label"
+            fi
+          done
+          gh issue edit "$parent" --repo "$REPOSITORY" --add-label status:ready
+          gh issue comment "$parent" --repo "$REPOSITORY" --body "[system] HANDOFF
+
+Pull request: #$PR_NUMBER
+State: ready
+Summary: Human merge completed. Project Manager completion verification is ready.
+Evidence: $PR_URL"

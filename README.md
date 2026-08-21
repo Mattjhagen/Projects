@@ -17,8 +17,8 @@ Network addresses and credentials are deliberately excluded from this public rep
 3. The assigned agent claims the issue and changes the state to `status:in-progress`.
 4. Code changes are made on an `agent/<role>/<issue>-<slug>` branch and submitted as a pull request.
 5. CI runs. The security agent reviews code-bearing pull requests.
-6. The Project Manager checks the acceptance criteria and changes the issue to `status:done` after merge.
-7. A human approves every merge during the MVP.
+6. A human approves and performs the merge.
+7. The merge handoff wakes the Project Manager, who verifies completion and changes the parent issue to `status:done`.
 
 Submit a new objective to the Project Manager from T310 with:
 

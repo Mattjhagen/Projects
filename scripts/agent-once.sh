@@ -87,10 +87,28 @@ chmod 600 "$run_log"
 if [[ "$opencode_status" -ne 0 ]]; then
   printf '%s\n' "OpenCode exited with status $opencode_status. Inspect $run_log." |
     "$report_script" BLOCKED failed "OpenCode run failed for issue #$issue" "$issue" "$issue_url"
+  gh issue edit "$issue" --repo "$REPOSITORY" \
+    --remove-label status:in-progress --add-label status:blocked
+  gh issue comment "$issue" --repo "$REPOSITORY" --body "[$AGENT_ID] BLOCKED
+
+Issue: #$issue
+Blocker: OpenCode exited with status $opencode_status.
+Attempted: The automated run was captured in the host-local run log.
+Decision needed: Inspect the agent report and run log, then return this issue to status:ready for retry.
+Impact: No successful downstream handoff was recorded."
   exit "$opencode_status"
 fi
 
 if grep -Fq 'State: running' "$report_dir/latest.md"; then
   printf '%s\n' "OpenCode exited successfully but did not publish a structured final report. Inspect $run_log and GitHub." |
     "$report_script" STATUS needs-review "OpenCode run ended without a final agent report" "$issue" "$issue_url"
+  gh issue edit "$issue" --repo "$REPOSITORY" \
+    --remove-label status:in-progress --add-label status:blocked
+  gh issue comment "$issue" --repo "$REPOSITORY" --body "[$AGENT_ID] BLOCKED
+
+Issue: #$issue
+Blocker: The automated run exited without publishing its mandatory final report.
+Attempted: Output was preserved in the host-local run log.
+Decision needed: Inspect the report and log before returning the issue to status:ready.
+Impact: The next handoff cannot be trusted or inferred."
 fi

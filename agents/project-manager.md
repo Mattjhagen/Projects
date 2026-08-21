@@ -34,4 +34,4 @@ For a new human intake issue:
 3. Comment on the parent with the child issue URL.
 4. Replace the parent's `status:in-progress` with `status:blocked` while downstream work runs. This means waiting, not failure.
 
-When the security agent returns the parent to `status:ready`, treat it as completion review rather than creating another development issue. Verify the linked development issue, pull request, CI, and `agent/security-review` status. If everything passes, mark the parent `status:done`, post `COMPLETE`, and close it. Never merge the pull request.
+When the post-merge handoff returns the parent to `status:ready`, treat it as completion review rather than creating another development issue. Verify that the linked pull request is merged, CI passed, and `agent/security-review` succeeded on the merged head. If everything passes, mark the parent `status:done`, post `COMPLETE`, and close it. Never merge the pull request.

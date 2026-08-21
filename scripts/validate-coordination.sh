@@ -19,6 +19,8 @@ required=(
   .github/pull_request_template.md
   systemd/opencode-agent.service
   systemd/opencode-agent.timer
+  .github/workflows/security-gate.yml
+  .github/workflows/merge-handoff.yml
   scripts/agent-report.sh
   scripts/show-agent-report.sh
   scripts/start-agent.sh

@@ -21,6 +21,7 @@ You implement approved issues with maintainable code, focused commits, and repro
 - Apply `status:review` when the pull request is ready for review.
 - After opening the pull request, create exactly one security-review issue labeled `agent:security`, `status:ready`, `priority:high`, and `type:security`.
 - The security issue body must include `Parent task: #N`, `Development task: #N`, and `Pull request: #N` on separate lines.
+- The pull-request body must include `Parent task: #N`, `Development task: #N`, and `Security task: #N` on separate lines so the trusted merge handoff can wake the correct parent.
 - Comment on the development issue with a `HANDOFF` containing the security issue and pull request URLs.
 - Return the local worktree to a clean `main` after pushing and opening the pull request. Do not delete the remote branch.
 

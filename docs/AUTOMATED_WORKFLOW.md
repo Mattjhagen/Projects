@@ -10,10 +10,11 @@ The human submits one objective. T310 scopes it, R510 implements it, R410 review
 Human intake (PM)
   -> development child (R510)
     -> pull request + security child (R410)
-      -> pass: wake parent (T310)
+      -> pass: parent waits for human merge
       -> fail: return development child (R510)
-  -> PM completion review
   -> human merge
+  -> trusted merge handoff wakes parent (T310)
+  -> PM completion review
 ```
 
 ## Required references
@@ -36,16 +37,21 @@ Never create a duplicate downstream issue when one of these references already e
 | Human | Objective | PM issue: `agent:pm`, `status:ready` |
 | PM | New intake | Developer child ready; parent blocked/waiting |
 | Developer | Developer child | PR and security child ready; developer child in review |
-| Security | Clean PR | Security child done; parent ready; commit status successful |
+| Security | Clean PR | Security child done; parent in review; commit status successful |
 | Security | Blocking finding | Developer child ready; security child blocked; commit status failed |
-| PM | Parent returned ready | Completion evidence checked; parent done |
 | Human | Passing PR | Merge decision |
+| Merge handoff | PR merged | Parent returned ready |
+| PM | Parent returned ready | Merged result checked; parent done |
 
 `status:blocked` on a parent may mean it is deliberately waiting for its children. The comment history must distinguish waiting from an actual blocker.
 
 ## Merge gate
 
-Every pull-request update sets `agent/security-review` to pending. R410 runs `scripts/security-verdict.sh` after reviewing the exact current head commit. A new commit resets the status to pending and requires a new review. Branch protection must require `validate` and `agent/security-review`.
+Every pull-request update sets `agent/security-review` to pending using a `pull_request_target` workflow that executes trusted base-branch code and never checks out PR content. R410 runs `scripts/security-verdict.sh` after reviewing the exact current head commit. A new commit resets the status to pending and requires a new review. Branch protection must require `validate` and `agent/security-review`.
+
+The R510 credential must not have Commit statuses write permission. Only the R410 credential and trusted GitHub workflow receive that permission. Because all hosts currently share one GitHub account, credential separation—not the visible account name—is the enforcement boundary.
+
+After human merge, a separate trusted `pull_request_target` workflow extracts the numeric `Parent task: #N` reference from the PR body and returns that issue to `status:ready`. It never executes or evaluates PR-provided code.
 
 ## Failure behavior
 
