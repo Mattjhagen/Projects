@@ -30,6 +30,10 @@ When periodic automation is enabled, T310 scopes the intake, R510 implements the
 
 GitHub is the source of truth. Local chat history, terminal output, and unpushed branches are not durable project state.
 
+## Agent status dashboard
+
+`scripts/dashboard-generate.sh` renders a static HTML snapshot of all three agents (identity, role, state, current issue or PR, last update, summary, blocker indicator, latest handoff) to the untracked path `.agent-state/dashboard/index.html`. Refresh is manual only; see [Dashboard](docs/DASHBOARD.md).
+
 ## Start here
 
 - [Shared agent rules](AGENTS.md)
