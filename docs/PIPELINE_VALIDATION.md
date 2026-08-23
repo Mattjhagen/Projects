@@ -19,9 +19,9 @@ security-reviewed pull request.
 | Claim | [dev-r510] | <https://github.com/Mattjhagen/Projects/issues/28#issuecomment-5388255610> |
 | Approach recorded | [dev-r510] | <https://github.com/Mattjhagen/Projects/issues/28#issuecomment-5388268456> |
 | Branch created | [dev-r510] | `agent/developer/28-pipeline-validation` from up-to-date `origin/main`, clean worktree |
-| Pull request opened | [dev-r510] | Pending |
-| CI validate | GitHub Actions | Pending: repository `validate` job on the exact PR head commit |
-| Security child created | [dev-r510] | Pending: single security-review issue referencing parent, development task, and pull request |
+| Pull request opened | [dev-r510] | Pull request: <https://github.com/Mattjhagen/Projects/pull/29> (draft; body carries Parent task #27, Development task #28, Security task #30) |
+| CI validate | GitHub Actions | Repository `validate` job runs on every PR head update; authoritative result for the current head commit: <https://github.com/Mattjhagen/Projects/pull/29/checks> |
+| Security child created | [dev-r510] | <https://github.com/Mattjhagen/Projects/issues/30> (`agent:security`, `status:ready`, `priority:high`, `type:security`) referencing parent, development task, and pull request |
 | Security review verdict | [security-r410] | Pending: REVIEW via `scripts/security-verdict.sh`; `agent/security-review` commit status on the same head commit |
 | Human merge decision | Human owner | Pending; a human owns merges during the MVP |
 
@@ -36,5 +36,7 @@ parent reference from the pull-request body and returns the parent issue to
 
 ## Final outcome
 
-Pending: this section is completed after the security gate passes and the
-human owner makes the merge decision.
+Pending: the gate requires `validate` and `agent/security-review` commit
+statuses to succeed on the exact current head commit of pull request #29.
+The human owner then makes the merge decision; the trusted merge-handoff
+workflow returns parent task #27 to `status:ready` for PM completion review.
