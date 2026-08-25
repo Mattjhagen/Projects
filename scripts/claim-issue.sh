@@ -7,7 +7,7 @@ agent_id="${3:?Usage: claim-issue.sh ISSUE ROLE AGENT_ID [REPOSITORY]}"
 repository="${4:-Mattjhagen/Projects}"
 
 case "$role:$agent_id" in
-  pm:pm-t310|developer:dev-r510|security:security-r410) ;;
+  pm:pm-t310|developer:dev-r510|security:security-r410|pm:pm-cloud|developer:dev-cloud|security:sec-cloud) ;;
   *) echo "Invalid role and agent identity pair" >&2; exit 1 ;;
 esac
 
