@@ -65,3 +65,12 @@ We transformed the multi-server web development pipeline into a **100% autonomou
 
 4. **Plan-Based Priority Support Ticket Queue**:
    - Client support tickets prioritized by plan level ($100 → Urgent, $75 → High, $50 → Medium, $20 → Low), processed FIFO within tier.
+
+
+## Mandatory Multi-Repo & GitHub Pages Rule (EVERY PROJECT)
+For EVERY new client intake project built by AI agents:
+1. **Dedicated Repository**: Provision a separate GitHub repository (e.g. `Mattjhagen/<project-name-slug>`). Never merge different client projects into a single shared repo.
+2. **5 Distinct Production Pages**: Build 5 complete, rich, standalone pages (`index.html`, `services.html`, `about.html`, `pricing.html`, `contact.html`) with unique content and Tailwind CSS styling.
+3. **Always-Visible Navigation**: Every page MUST feature an always-visible top navigation header with active page pill highlighting across all viewports.
+4. **Auto-Enable GitHub Pages**: Execute `gh api -X POST /repos/Mattjhagen/<project-slug>/pages -f "source[branch]=main" -f "source[path]=/"`.
+5. **SSL & Favicon**: Inject custom `favicon.svg` and enforce HTTPS (`https_enforced=true`). Include the live GitHub Pages URL (`https://mattjhagen.github.io/<project-slug>/`) in the handoff summary.
