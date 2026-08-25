@@ -15,7 +15,7 @@ automation_enabled="${AUTOMATION_ENABLED:-false}"
 report_script="$PROJECT_DIR/scripts/agent-report.sh"
 
 case "$AGENT_ROLE:$AGENT_ID" in
-  pm:pm-t310|developer:dev-r510|security:security-r410) ;;
+  pm:pm-t310|developer:dev-r510|security:security-r410|pm:pm-cloud|developer:dev-cloud|security:sec-cloud) ;;
   *) echo "Invalid AGENT_ROLE and AGENT_ID pair" >&2; exit 1 ;;
 esac
 
