@@ -17,7 +17,7 @@ source "$config_file"
 : "${PROJECT_DIR:?PROJECT_DIR is required}"
 
 case "$AGENT_ROLE:$AGENT_ID" in
-  pm:pm-t310|developer:dev-r510|security:security-r410) ;;
+  pm:pm-t310|developer:dev-r510|security:security-r410|pm:pm-cloud|developer:dev-cloud|security:sec-cloud) ;;
   *) echo "Invalid AGENT_ROLE and AGENT_ID pair" >&2; exit 1 ;;
 esac
 
