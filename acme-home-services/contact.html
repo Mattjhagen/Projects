@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact | Acme Home Services</title>
+  <meta name="description" content="Get in touch with Acme Home Services. Schedule service, request a quote, or ask a question.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="index.html" class="logo">Acme <span>Home</span></a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="services.html">Services</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="contact.html" class="nav-cta active">Get a Quote</a>
+      </div>
+      <button class="mobile-toggle" aria-label="Toggle menu">☰</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <h1>Contact Us</h1>
+        <p>We'd love to hear from you. Reach out anytime — we respond within 24 hours.</p>
+      </div>
+    </section>
+
+    <section class="page-content">
+      <div class="container">
+        <div class="contact-grid">
+          <div class="contact-form">
+            <h2>Send Us a Message</h2>
+            <form id="contactForm">
+              <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" placeholder="John Smith" required>
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="john@example.com" required>
+              </div>
+              <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="tel" id="phone" name="phone" placeholder="(312) 555-0000">
+              </div>
+              <div class="form-group">
+                <label for="service">Service Needed</label>
+                <select id="service" name="service">
+                  <option value="">Select a service...</option>
+                  <option value="plumbing">Plumbing Repair</option>
+                  <option value="hvac">HVAC Service</option>
+                  <option value="heating">Heating / Furnace</option>
+                  <option value="cooling">Air Conditioning</option>
+                  <option value="water-heater">Water Heater</option>
+                  <option value="sewer">Sewer & Drain</option>
+                  <option value="emergency">Emergency Service</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="message">Tell Us About Your Issue</label>
+                <textarea id="message" name="message" placeholder="Describe what you need help with..." required></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">Send Message</button>
+            </form>
+          </div>
+
+          <div class="contact-info">
+            <h2>Get In Touch</h2>
+            <div class="contact-item">
+              <span class="icon">📞</span>
+              <div>
+                <h4>Phone</h4>
+                <p><a href="tel:+13125551234">(312) 555-1234</a></p>
+                <p>24/7 Emergency Line</p>
+              </div>
+            </div>
+            <div class="contact-item">
+              <span class="icon">📧</span>
+              <div>
+                <h4>Email</h4>
+                <p><a href="mailto:info@acmehomeservices.com">info@acmehomeservices.com</a></p>
+                <p>We respond within 24 hours</p>
+              </div>
+            </div>
+            <div class="contact-item">
+              <span class="icon">📍</span>
+              <div>
+                <h4>Office</h4>
+                <p>1234 W. Chicago Ave</p>
+                <p>Chicago, IL 60601</p>
+              </div>
+            </div>
+            <div class="contact-item">
+              <span class="icon">🕐</span>
+              <div>
+                <h4>Hours</h4>
+                <p>Mon–Fri: 7 AM – 7 PM</p>
+                <p>Sat–Sun: 8 AM – 4 PM</p>
+                <p>Emergency: 24/7</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="logo">Acme Home</span>
+          <p>Trusted plumbing and HVAC services for Chicago homes and businesses since 2005.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Services</h4>
+          <a href="services.html">Plumbing</a>
+          <a href="services.html">HVAC</a>
+          <a href="services.html">Water Heaters</a>
+          <a href="services.html">Sewer & Drain</a>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <a href="about.html">About Us</a>
+          <a href="pricing.html">Pricing</a>
+          <a href="contact.html">Contact</a>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <a href="tel:+13125551234">(312) 555-1234</a>
+          <a href="mailto:info@acmehomeservices.com">info@acmehomeservices.com</a>
+          <a href="#">Chicago, IL 60601</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        &copy; 2026 Acme Home Services. All rights reserved. Licensed in Illinois.
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
