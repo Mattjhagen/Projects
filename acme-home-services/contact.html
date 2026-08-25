@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Contact Acme Home Services in Chicago. Schedule plumbing or HVAC service, get a free quote, or ask a question.">
+  <title>Contact Us | Acme Home Services</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <nav class="container">
+      <a href="index.html" class="logo">
+        <div class="logo-icon">AC</div>
+        Acme Home Services
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="contact.html" class="nav-cta">Get a Quote</a></li>
+      </ul>
+      <div class="mobile-menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </nav>
+  </header>
+
+  <section class="page-hero">
+    <div class="container">
+      <h1>Contact Us</h1>
+      <p>Ready to schedule service? Have a question? We're here to help.</p>
+    </div>
+  </section>
+
+  <section class="contact">
+    <div class="container">
+      <div class="contact-wrapper">
+        <div class="contact-info">
+          <h2>Get In Touch</h2>
+          <p>Whether you need emergency service or want to schedule routine maintenance, our friendly team is ready to help. Reach out today for a free estimate.</p>
+          
+          <ul class="contact-details">
+            <li>
+              <div class="contact-icon">📞</div>
+              <div>
+                <strong>Phone</strong>
+                <span>(312) 555-1234</span>
+              </div>
+            </li>
+            <li>
+              <div class="contact-icon">📧</div>
+              <div>
+                <strong>Email</strong>
+                <span>service@acmehomeservices.com</span>
+              </div>
+            </li>
+            <li>
+              <div class="contact-icon">📍</div>
+              <div>
+                <strong>Address</strong>
+                <span>123 Main Street<br>Chicago, IL 60601</span>
+              </div>
+            </li>
+            <li>
+              <div class="contact-icon">🕐</div>
+              <div>
+                <strong>Hours</strong>
+                <span>Mon-Fri: 7AM - 7PM<br>Emergency: 24/7</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="contact-form">
+          <form>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="name">Full Name *</label>
+                <input type="text" id="name" name="name" required placeholder="John Smith">
+              </div>
+              <div class="form-group">
+                <label for="phone">Phone Number *</label>
+                <input type="tel" id="phone" name="phone" required placeholder="(312) 555-1234">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="email">Email Address *</label>
+              <input type="email" id="email" name="email" required placeholder="john@example.com">
+            </div>
+            <div class="form-group">
+              <label for="service">Service Needed</label>
+              <select id="service" name="service">
+                <option value="">Select a service...</option>
+                <option value="plumbing">Plumbing Repair</option>
+                <option value="ac">AC Repair / Installation</option>
+                <option value="furnace">Furnace Repair / Installation</option>
+                <option value="water-heater">Water Heater Service</option>
+                <option value="drain">Drain Cleaning</option>
+                <option value="emergency">Emergency Service</option>
+                <option value="maintenance">Maintenance Plan</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="message">Tell Us More *</label>
+              <textarea id="message" name="message" required placeholder="Describe your issue or what you need help with..."></textarea>
+            </div>
+            <button type="submit" class="btn-primary" style="width: 100%; justify-content: center;">Send Message →</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="services" style="background: var(--warm-cream);">
+    <div class="container">
+      <div class="section-header">
+        <h2>Emergency? Call Now!</h2>
+        <p>For immediate assistance with urgent issues</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon">🚨</div>
+          <h3>Burst Pipes</h3>
+          <p>Water gushing from a pipe? Turn off the main water valve and call us immediately.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">🔥</div>
+          <h3>Gas Leak</h3>
+          <p>Smell gas? Evacuate immediately, don't use electrical switches, and call us.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">❄️</div>
+          <h3>No Heat</h3>
+          <p>Furnace not working? We'll get your heat back on, even on nights and weekends.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="services">
+    <div class="container">
+      <div class="section-header">
+        <h2>Service Areas</h2>
+        <p>Proudly serving Chicago and surrounding communities</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon">📍</div>
+          <h3>Chicago</h3>
+          <p>Lincoln Park, Wicker Park, Logan Square, Lakeview, and all Chicago neighborhoods.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">📍</div>
+          <h3>North Shore</h3>
+          <p>Evanston, Wilmette, Kenilworth, Winnetka, Glencoe, and Highland Park.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">📍</div>
+          <h3>Suburbs</h3>
+          <p>Oak Park, Elmwood Park, Niles, Park Ridge, Des Plaines, and more.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <h3>Acme Home Services</h3>
+          <p>Chicago's trusted partner for all plumbing and HVAC needs. Professional, reliable, and always here when you need us.</p>
+        </div>
+        <div class="footer-links">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="services.html">Plumbing</a></li>
+            <li><a href="services.html">AC Repair</a></li>
+            <li><a href="services.html">Furnace</a></li>
+            <li><a href="services.html">Water Heater</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="pricing.html">Pricing</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="tel:3125551234">(312) 555-1234</a></li>
+            <li><a href="mailto:service@acmehomeservices.com">service@acmehomeservices.com</a></li>
+            <li><span>123 Main Street<br>Chicago, IL 60601</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Acme Home Services. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
